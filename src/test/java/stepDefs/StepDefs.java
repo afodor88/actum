@@ -8,6 +8,7 @@ import io.cucumber.java.en.Then;
 import managers.DriverManager;
 import org.junit.Assert;
 import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -19,6 +20,7 @@ import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 import static pages.demoBlazeLoginPage.*;
+import static pages.demoBlazeLoginPage.welcomeExistingUserButton;
 import static utility.RandomString.*;
 
 
@@ -94,6 +96,33 @@ public class StepDefs {
 
     @Then("the sign up failed with error {string}")
     public void the_sign_up_failed_with_error(String msg) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.alertIsPresent());
+        Alert alert = driver.switchTo().alert();
+        String alertMessage = alert.getText();
+        Assert.assertEquals(msg, alertMessage);
+        alert.accept();
+    }
+
+    @Given("the user is doing a login with the username {string} and password {string}")
+    public void the_user_is_doing_a_login_with_the_username_and_password(String username, String password) {
+        loginButton(driver).click();
+
+        loginUsernameField(driver).sendKeys(username);
+        loginPasswordField(driver).sendKeys(password);
+        loginSubmitButton(driver).click();
+    }
+
+    @Then("the user has logged in successfully")
+    public void the_user_has_logged_in_successfully() throws InterruptedException {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("logout2")));
+
+        Assert.assertTrue(logoutButton(driver).isDisplayed());
+    }
+
+    @Then("the login failed with error {string}")
+    public void the_login_failed_with_error(String msg) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         wait.until(ExpectedConditions.alertIsPresent());
         Alert alert = driver.switchTo().alert();

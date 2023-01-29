@@ -9,7 +9,7 @@ Feature: Sign up to Demo Blaze
     Then the sign up was successful
 
 
-  Scenario Outline: Sign up with an existing user
+  Scenario Outline: Sign up with an existing user, no user or password
 
     Given the user is signing up with the user "<username>" and password "<password>"
     Then the sign up failed with error "<msg>"

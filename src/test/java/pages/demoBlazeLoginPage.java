@@ -30,4 +30,34 @@ public class demoBlazeLoginPage {
         element = driver.findElement(By.xpath("//*[contains(@class, 'btn btn-primary')][ text() = 'Sign up' ]"));
         return element;
     }
+
+    public static WebElement loginButton(WebDriver driver) {
+        element = driver.findElement(By.id("login2"));
+        return element;
+    }
+
+    public static WebElement loginUsernameField(WebDriver driver) {
+        element = driver.findElement(By.id("loginusername"));
+        return element;
+    }
+
+    public static WebElement loginPasswordField(WebDriver driver) {
+        element = driver.findElement(By.id("loginpassword"));
+        return element;
+    }
+
+    public static WebElement loginSubmitButton(WebDriver driver) {
+        element = driver.findElement(By.xpath("//*[contains(@class, 'btn btn-primary')][ text() = 'Log in' ]"));
+        return element;
+    }
+
+    public static WebElement welcomeExistingUserButton(WebDriver driver) {
+        element = driver.findElement(By.id("nameofuser"));
+        return element;
+    }
+
+    public static WebElement logoutButton(WebDriver driver) {
+        element = driver.findElement(By.id("logout2"));
+        return element;
+    }
 }
