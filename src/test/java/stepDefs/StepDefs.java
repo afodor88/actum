@@ -92,13 +92,13 @@ public class StepDefs {
 
     }
 
-    @Then("the sign up failed")
-    public void the_sign_up_failed() {
+    @Then("the sign up failed with error {string}")
+    public void the_sign_up_failed_with_error(String msg) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         wait.until(ExpectedConditions.alertIsPresent());
         Alert alert = driver.switchTo().alert();
         String alertMessage = alert.getText();
-        Assert.assertEquals("This user already exist.", alertMessage);
+        Assert.assertEquals(msg, alertMessage);
         alert.accept();
     }
 

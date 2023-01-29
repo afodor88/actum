@@ -12,7 +12,8 @@ Feature: Sign up to Demo Blaze
   Scenario Outline: Sign up with an existing user
 
     Given the user is signing up with the user "<username>" and password "<password>"
-    Then the sign up failed
+    Then the sign up failed with error "<msg>"
     Examples:
-      | username     | password |
-      | existingUser | password |
+      | username     | password | msg                                    |
+      | existingUser | password | This user already exist.               |
+      |              |          | Please fill out Username and Password. |
