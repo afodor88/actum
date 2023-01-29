@@ -15,13 +15,11 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import utility.Log;
 
 
-
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 import static pages.demoBlazeLoginPage.*;
 import static utility.RandomString.*;
-
 
 
 public class StepDefs {
@@ -42,7 +40,7 @@ public class StepDefs {
     }
 
     @After
-    public void tearDown() throws InterruptedException {
+    public void tearDown() {
         Log.info("Closing browser and clearing cache");
         driver.manage().deleteAllCookies();
         driver.quit();
@@ -55,6 +53,7 @@ public class StepDefs {
         Log.info(driver.getTitle());
         Assert.assertEquals("STORE", driver.getTitle());
     }
+
     @And("the user is signing up with the user {string} and password {string}")
     public void the_user_is_signing_up_with_the_user_and_password(String username, String password) {
         signUpButton(driver).click();
@@ -65,16 +64,16 @@ public class StepDefs {
 
 
     }
+
     @Then("the sign up was successful")
     public void the_sign_up_was_successful() {
 
-        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(5));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         wait.until(ExpectedConditions.alertIsPresent());
         Alert alert = driver.switchTo().alert();
         String alertMessage = alert.getText();
         Assert.assertEquals("Sign up successful.", alertMessage);
-        alert.dismiss();
-
+        alert.accept();
 
     }
 
@@ -84,15 +83,23 @@ public class StepDefs {
         String username = getAlphaNumericString(10);
         String password = getAlphaNumericString(10);
 
-        Log.info("Random user used for sign up " +  username);
-        Log.info("Random password used for sign up " +  password);
+        Log.info("Random user used for sign up " + username);
+        Log.info("Random password used for sign up " + password);
         signUpButton(driver).click();
         signUpUsernameField(driver).sendKeys(username);
         signUpPasswordField(driver).sendKeys(password);
         signUpSubmitButton(driver).click();
 
+    }
 
-
+    @Then("the sign up failed")
+    public void the_sign_up_failed() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.alertIsPresent());
+        Alert alert = driver.switchTo().alert();
+        String alertMessage = alert.getText();
+        Assert.assertEquals("This user already exist.", alertMessage);
+        alert.accept();
     }
 
 }
