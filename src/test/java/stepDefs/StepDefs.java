@@ -5,10 +5,21 @@ import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import org.junit.Assert;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import utility.Log;
 
-import java.util.concurrent.TimeUnit;
+
+
+import java.time.Duration;
+
+import static pages.demoBlazeLoginPage.*;
+import static utility.RandomString.*;
+
+
 
 public class StepDefs {
 
@@ -16,18 +27,48 @@ public class StepDefs {
 
     @Given("the user navigates to {string}")
     public void the_user_navigates_to(String url) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        driver.get(url);
+        Log.info(driver.getTitle());
+        Assert.assertEquals("STORE", driver.getTitle());
     }
     @And("the user is signing up with the user {string} and password {string}")
     public void the_user_is_signing_up_with_the_user_and_password(String username, String password) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        signUpButton(driver).click();
+
+        signUpUsernameField(driver).sendKeys(username);
+        signUpPasswordField(driver).sendKeys(password);
+        signUpSubmitButton(driver).click();
+
+
     }
     @Then("the sign up was successful")
     public void the_sign_up_was_successful() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+
+        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.alertIsPresent());
+        Alert alert = driver.switchTo().alert();
+        String alertMessage = alert.getText();
+        Assert.assertEquals("Sign up successful.", alertMessage);
+        alert.dismiss();
+
+
+    }
+
+
+    @Given("the user is signing up with a random username and password")
+    public void the_user_is_signing_up_with_a_random_username_and_password() {
+        String username = getAlphaNumericString(10);
+        String password = getAlphaNumericString(10);
+
+        Log.info("Random user used for sign up " +  username);
+        Log.info("Random password used for sign up " +  password);
+        signUpButton(driver).click();
+        signUpUsernameField(driver).sendKeys(username);
+        signUpPasswordField(driver).sendKeys(password);
+        signUpSubmitButton(driver).click();
+
+
+
     }
 
 }
