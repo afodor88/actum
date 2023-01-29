@@ -5,9 +5,11 @@ import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import managers.DriverManager;
 import org.junit.Assert;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utility.Log;
@@ -15,6 +17,7 @@ import utility.Log;
 
 
 import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 import static pages.demoBlazeLoginPage.*;
 import static utility.RandomString.*;
@@ -23,7 +26,28 @@ import static utility.RandomString.*;
 
 public class StepDefs {
 
-    public static WebDriver driver = Hooks.driver;
+    public static WebDriver driver;
+
+    @Before
+    public void setup() {
+
+        Log.info("Setting up webdriver settings...");
+        //set DriverManager
+        driver = DriverManager.getDriver();
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
+        driver.manage().timeouts().setScriptTimeout(60, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+    }
+
+    @After
+    public void tearDown() throws InterruptedException {
+        Log.info("Closing browser and clearing cache");
+        driver.manage().deleteAllCookies();
+        driver.quit();
+        driver = null;
+    }
 
     @Given("the user navigates to {string}")
     public void the_user_navigates_to(String url) {
