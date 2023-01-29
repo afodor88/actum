@@ -5,6 +5,7 @@ import io.cucumber.java.Before;
 import managers.DriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import utility.Log;
 
 import java.util.concurrent.TimeUnit;
 
@@ -15,6 +16,7 @@ public class Hooks {
     @Before
     public void setup() {
 
+        Log.info("Setting up webdriver settings...");
         //set DriverManager
         driver = DriverManager.getDriver();
         driver = new ChromeDriver();
@@ -25,6 +27,7 @@ public class Hooks {
 
     @After
     public void tearDown() throws InterruptedException {
+        Log.info("Closing browser and clearing cache");
         driver.manage().deleteAllCookies();
         driver.quit();
         driver = null;
