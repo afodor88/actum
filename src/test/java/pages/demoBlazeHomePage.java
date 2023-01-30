@@ -66,6 +66,11 @@ public class demoBlazeHomePage {
         return element;
     }
 
+    public static WebElement itemToBuyPrice(WebDriver driver, String name) {
+        element = driver.findElement(By.xpath("//*[contains(@class, 'card-title')]//*[ text() = '" + name + "' ]/parent::*/parent::*/h5"));
+        return element;
+    }
+
     public static WebElement addToCartButton(WebDriver driver) {
         element = driver.findElement(By.xpath("//*[contains(@class, 'btn btn-success btn-lg')][ text() = 'Add to cart' ]"));
         return element;
