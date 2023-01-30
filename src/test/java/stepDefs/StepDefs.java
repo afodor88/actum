@@ -21,7 +21,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-import static pages.demoBlazeLoginPage.*;
+import static pages.demoBlazeHomePage.*;
 import static pages.demoBlazeCartPage.*;
 import static utility.RandomString.*;
 
