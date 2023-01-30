@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import static pages.demoBlazeLoginPage.*;
-import static pages.demoBlazeLoginPage.welcomeExistingUserButton;
+import static pages.demoBlazeCartPage.*;
 import static utility.RandomString.*;
 
 
