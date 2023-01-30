@@ -77,4 +77,19 @@ public class demoBlazeHomePage {
         return element;
     }
 
+    public static WebElement itemCategoryToChooseFrom(WebDriver driver, String category) {
+        element = driver.findElement(By.xpath("//*[@onclick=\"byCat('" + category + "')\"]"));
+        return element;
+    }
+
+//    public static WebElement notebookCategory(WebDriver driver) {
+//        element = driver.findElement(By.xpath("//*[@onclick=\"byCat('notebook')\"]"));
+//        return element;
+//    }
+//
+//    public static WebElement monitorCategory(WebDriver driver) {
+//        element = driver.findElement(By.xpath("//*[@onclick=\"byCat('monitor')\"]"));
+//        return element;
+//    }
+
 }

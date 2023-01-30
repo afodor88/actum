@@ -190,4 +190,9 @@ public class StepDefs {
 
     }
 
+    @Given("the user selects category {string}")
+    public void the_user_selects_category(String category) {
+        itemCategoryToChooseFrom(driver, category).click();
+    }
+
 }
