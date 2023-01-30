@@ -60,4 +60,25 @@ public class demoBlazeLoginPage {
         element = driver.findElement(By.id("logout2"));
         return element;
     }
+
+    public static WebElement itemToBuy(WebDriver driver, String name) {
+        element = driver.findElement(By.xpath("//*[contains(@class, 'card-title')]//*[ text() = '" + name + "' ]"));
+        return element;
+    }
+
+    public static WebElement addToCartButton(WebDriver driver) {
+        element = driver.findElement(By.xpath("//*[contains(@class, 'btn btn-success btn-lg')][ text() = 'Add to cart' ]"));
+        return element;
+    }
+
+    public static List<WebElement> cartTitles(WebDriver driver) {
+        elements = driver.findElements(By.xpath("//*[contains(@class, 'table table-bordered table-hover table-striped')]//td[2]"));
+        return elements;
+    }
+
+    public static WebElement cartButton(WebDriver driver) {
+        element = driver.findElement(By.id("cartur"));
+        return element;
+    }
+
 }

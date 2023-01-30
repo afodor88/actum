@@ -10,6 +10,7 @@ import org.junit.Assert;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -17,6 +18,7 @@ import utility.Log;
 
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import static pages.demoBlazeLoginPage.*;
@@ -129,6 +131,31 @@ public class StepDefs {
         String alertMessage = alert.getText();
         Assert.assertEquals(msg, alertMessage);
         alert.accept();
+    }
+
+    @Given("the user is adding item called {string} to cart")
+    public void the_user_is_adding_item_called_to_cart(String item) {
+        itemToBuy(driver, item).click();
+        addToCartButton(driver).click();
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.alertIsPresent());
+        Alert alert = driver.switchTo().alert();
+        String alertMessage = alert.getText();
+        Assert.assertEquals("Product added", alertMessage);
+        alert.accept();
+    }
+
+    @Then("the user checks if the item {string} is in the cart")
+    public void the_user_checks_if_the_item_is_in_the_cart(String item) {
+        cartButton(driver).click();
+        ArrayList<String> cart = new ArrayList<>();
+        for (WebElement cartItem : cartTitles(driver)) {
+            cart.add(cartItem.getText());
+            Log.info("Cart item: " + cartItem.getText());
+        }
+
+        Assert.assertTrue(cart.contains(item));
     }
 
 }
