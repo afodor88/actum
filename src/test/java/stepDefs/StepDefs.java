@@ -158,4 +158,36 @@ public class StepDefs {
         Assert.assertTrue(cart.contains(item));
     }
 
+    @Then("the user is placing an order with the required fields {string}, {string}, {string}, {string}, {int} and {int}")
+    public void the_user_is_placing_an_order_with_the_required_fields_and(String name, String country, String city, String creditCard, int month, int year) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.textToBe(By.tagName("h2"), "Products"));
+
+
+
+        //check we are on the Products page
+        Assert.assertTrue(placeOrderButton(driver).isDisplayed());
+
+        placeOrderButton(driver).click();
+
+        placeOrderName(driver).sendKeys(name);
+        placeOrderCountry(driver).sendKeys(country);
+        placeOrderCity(driver).sendKeys(city);
+        placeOrderCreditCard(driver).sendKeys(creditCard);
+        placeOrderMonth(driver).sendKeys(String.valueOf(month));
+        placeOrderYear(driver).sendKeys(String.valueOf(year));
+
+        purchase(driver).click();
+
+        String purchaseMessage = thankYouForPurchaseDialog(driver).getText();
+        Log.info(purchaseMessage);
+
+        Assert.assertTrue(purchaseMessage.contains("Id:"));
+        Assert.assertTrue(purchaseMessage.contains("Amount"));
+        Assert.assertTrue(purchaseMessage.contains("Card Number: " + creditCard));
+        Assert.assertTrue(purchaseMessage.contains("Name: " + name));
+        Assert.assertTrue(purchaseMessage.contains(month + "/" + year));
+
+    }
+
 }
